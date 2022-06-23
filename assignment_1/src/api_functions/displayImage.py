@@ -9,34 +9,37 @@ import random
 # @Author: Cheng Wang
 # @UpdateDate: 6/12/2022
 def showRandomImg():
-    data1="""
-        <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Assignment 1</title>
-            </head>
-            <body>
-                <h1>Military Aircraft Detection version 7</h1>
-                <h2>Random 5 images Display</h2>
-    """
+    try:
+        data1="""
+            <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Assignment 1</title>
+                </head>
+                <body>
+                    <h1>Military Aircraft Detection version 7</h1>
+                    <h2>Random 5 images Display</h2>
+        """
 
-    html_img=""
+        html_img=""
 
-    file_list = getNumRandomImageFileNames(5)
-    for i in range(len(file_list)):
-        body = getS3BucketBody(file_list[i])
-        img_base64_data = base64.b64encode(body)
-        img_data = img_base64_data.decode('utf-8')
+        file_list = getNumRandomImageFileNames(5)
+        for i in range(len(file_list)):
+            body = getS3BucketBody(file_list[i])
+            img_base64_data = base64.b64encode(body)
+            img_data = img_base64_data.decode('utf-8')
 
-        html_img= html_img + '<img src="data:image/png;base64,' + img_data +'"/>'
-    
-    data2="""     
-            </body>
-        </html>
-    """
-    response=data1+html_img+data2
+            html_img= html_img + '<img src="data:image/png;base64,' + img_data +'"/>'
+        
+        data2="""     
+                </body>
+            </html>
+        """
+        response=data1+html_img+data2
+    except:
+        print("There are some error in this function.")
     return response
 
 

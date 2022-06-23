@@ -8,6 +8,7 @@ import boto3
 # @Author: Cheng Wang
 # @UpdateDate: 6/12/2022
 def getFileNameCsvInfo(filename: str):
+    try:
         key = 'csv/combined.csv'
         abs_path = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))
         csv_path = abs_path+"\\credentials\\aws_s3_credentials.json"
@@ -46,8 +47,10 @@ def getFileNameCsvInfo(filename: str):
                     result[str(index_no)] = {}
                     for j in range(len(inner_index_num)): #? 8 elements
                         result[str((index_no))][header_list[j]] = csv_header_value_list[i][j] # i = 0      |      j = 0 - 7
-                
-        return result
+    except:
+        print("There are some error in this function.")        
+    
+    return result
 
     
 
