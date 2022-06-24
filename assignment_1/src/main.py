@@ -4,12 +4,12 @@ from fastapi import FastAPI, Query, Path, Request
 from typing import Union
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from log.logger import logger
 import time
 from pydantic import BaseModel
 from pathlib import Path
 import sys
 import logging
+import logging.config
 from requests import request
 
 path = str(Path(Path(__file__).parent.absolute()))
@@ -68,8 +68,6 @@ async def inputInfoFilterRequest(filename:Union[str,None]= Query(default="", max
     className = className.upper()
 
     response = getS3BucketBody.getS3BucketBodyInfo(filename,width,height,className,xmin,ymin,xmax,ymax) # get return response
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
     return  response
 
 # fileName , class input and return response
@@ -79,11 +77,7 @@ async def aircraftClassAndFileNameRequest(className:str,
     className = className.upper()
     
     response = fileNameAndClassNameFiltered.getFileNameClassNameFilteredResult(className,filename) # get return response
-    
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
         
-    
     return  response
 
 # (width , weight) range and get response
@@ -93,8 +87,6 @@ async def imgSzieRangeRequest(width:Union[int,None] = Query(default=0),
     
     response = imgSizeRangeFiltered.getimgSizeRangeFilteredResult(width,height) # get return response
     
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
     
     return  response
 
@@ -106,8 +98,7 @@ async def aircraftPositionRequest(xmin:Union[int,None] = Query(default=0),
                                   ymax:Union[int,None] = Query(default=0)):
     
     response = aircraftPositionFilter.getAircraftPositionFilterResult(xmin,ymin,xmax,ymax) # get return response
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
+
     return  response
 
 # No input value and get response(all info)
@@ -117,8 +108,6 @@ async def getAllImgInfo():
     
     response = getS3BucketBody.getS3BucketBodyInfo() # get return response
     
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
     
     return response
 
@@ -131,9 +120,6 @@ async def numAndClassFiteredInfoRequest(num:int,
     className = className.upper()
     response = numAndClassNameFiltered.getNumAndClassFilteredResult(num,className)
     
-    
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
         
     return  response
 
@@ -144,8 +130,6 @@ async def getNumRandomImage(num: int = Path(title="Number of random aircrafts", 
 
     response =  getNumRandomImages.getNumRandomImageFileNames(num)
     
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
         
     return response
 
@@ -158,9 +142,6 @@ async def getPandasCsvOutputHtmlPage():
 
     response = displayPandasCsvHtmlOutput.getPandasProfilingCsvHtmlOutput()
 
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
-
 
     return response
 
@@ -172,18 +153,12 @@ async def getPandasImageOutputHtmlPage():
 
     response = displayPandasImagesHtmlOutput.getPandasProfilingImageHtmlOutput()
 
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
-
     return response
     
 @app.get("/modelcard/html/", response_class=HTMLResponse)
 async def getModelCardOutputHtmlPage():
 
     response = displaymodelcardhtmloutput.displayModelCardHtmlOutput()
-
-    if(response == {}):
-        logger.error("No data Found: HTTP 404")
 
     return response
 
