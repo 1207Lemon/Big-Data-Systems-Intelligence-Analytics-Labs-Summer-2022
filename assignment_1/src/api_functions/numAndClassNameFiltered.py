@@ -47,6 +47,10 @@ def getNumAndClassFilteredResult(num,className=""):
                 if(csv_header_value_list[i][0] == csv_header_value_list[i-1][0]):  # a a b
                     if(className == '' or className == csv_header_value_list[i][3]):
                         count_num += 1  # + 1 record
+                        # result[str(index_no)][header_list[3]] = {}
+                        # index1 = "class" + str(a + 1)
+                        # for a in range(len(csv_header_value_list)):
+                        #     result[str(index_no)]["class"][index1] = csv_header_value_list[a][3]
 
                 else:
                     if(count_num == num and i-1 != 0):
@@ -60,9 +64,6 @@ def getNumAndClassFilteredResult(num,className=""):
                         count_num = 1
                         continue
                 index_no += 1  # ?   +1 record(key+value)
-        # if(result == {}):
-        #     logger.error("No data Found: HTTP 404")
-        #     return {"error":"No data"}     
     except:
         print("There are some error in this function.")      
     return result  
