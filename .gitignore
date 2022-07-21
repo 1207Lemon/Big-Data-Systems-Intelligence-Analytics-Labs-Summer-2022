@@ -6,13 +6,17 @@ __pycache__/
 # C extensions
 *.so
 
+AiflowTutorial/airflow
+DockerTutorial/docekr
+
 workshops
 
 Generate_MetaData/archive
 Generate_MetaData/MetaData.csv
 
+Lab5/Model/tensorflow-2.4.1-py3-none-any.whl
 Lab3/great_expectations/Data
-ßß
+
 # Distribution / packaging
 .Python
 build/
@@ -134,3 +138,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+.DS_STORE
